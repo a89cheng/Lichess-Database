@@ -1,7 +1,7 @@
 import streamlit as st
 import chess.pgn
-#import pandas
-#import python-chess
+import chess
+import pandas as pd
 #import matplotlib
 
 #Key concepts:
@@ -19,8 +19,31 @@ while True:
     else:
         st.write("File is not uploaded. Try again!")
 
-pgn = open("pgnfile.pgn")  # your uploaded PGN file
+#pgn = open("pgnfile.pgn")  # your uploaded PGN file | is completely unecessary to open file... doesn't exist on disk?
+
+"""
+The games list below isolates all the games in the PGN into individual ones
+The game_info goes through all the games in the list "games" and takes the header information
+This is a 2 step process of isolating the games and then extracting the data
+"""
 games = []  # store game info dictionaries
+
+while True:
+    game = chess.pgn.read_game(pgn) #Would assume that the function read_game reads only 1 game at a time hence, the games are stored accordingly
+    if game is None:  # means end of file, this si done by default by python-chess
+        break
+    games.append(game) #Games are added to the game list and the headers will be stored in dictionaries
+
+game_info = []
+
+for game in games: #For all games in a single pgn file...
+    headers = game.headers
+    game_info.append({
+        "White": headers.get("White", "Unknown"),
+        "Black": headers.get("Black", "Unknown"),
+        "Result": headers.get("Result", "Unknown"),
+        "Opening": headers.get("Opening", "Unknown"),
+    }) #The headers are extracted and set equivalent to whatever they are in the game...
 
 
 """"""
