@@ -12,6 +12,7 @@ def main():
     import chess
     import pandas as pd
     import matplotlib
+    import io
 
     st.title("Chess Opening Explorer Test")
 
@@ -21,10 +22,12 @@ def main():
 
     if pgnfile is not None:
         #game = chess.pgn.read_game(pgnfile)
-        st.write("File is uploaded!") 
+        st.write("File is uploaded!")
+        text = pgnfile.read().decode("utf-8") #has to interpret to a string 
+        pgnfile = io.StringIO(text) 
         pgnfile.seek(0) # ✅ Reset file pointer before reading (ChatGPT line)
 
-    #pgn = open("pgnfile.pgn")  # your uploaded PGN file | is completely unecessary to open file... doesn't exist on disk?
+     #pgn = open("pgnfile.pgn")  # your uploaded PGN file | is completely unecessary to open file... doesn't exist on disk?
 
         """
         The games list below isolates all the games in the PGN into individual ones
@@ -114,15 +117,15 @@ if __name__ == "__main__":
     main()
 
 
-"""
-data = pgnfile.read()  # bytes
 
-lines = text.splitlines()
-st.write(lines[:10])  # show first 10 lines
+#data = pgnfile.read()  # bytes
 
-text = data.decode("utf-8")  # string and "utf-8" tells the computer how to convert those 0s and 1s back into human-readable characters
-st.write(text[:100])  # first 100 characters
-"""
+#lines = text.splitlines()
+#st.write(lines[:10])  # show first 10 lines
+
+#text = data.decode("utf-8")  # string and "utf-8" tells the computer how to convert those 0s and 1s back into human-readable characters
+#st.write(text[:100])  # first 100 characters
+
 
 #PGN Subheadings typically include:
 #Typical headers are:
