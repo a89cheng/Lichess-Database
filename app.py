@@ -7,11 +7,17 @@
     #st.title("Chess Opening Explorer Test")
 
 def main():
-    iw
+    import streamlit as st
+    import chess.pgn
+    import chess
+    import pandas as pd
+    import matplotlib
 
     st.title("Chess Opening Explorer Test")
 
     pgnfile = st.file_uploader("Upload PGN")
+
+    game_info = [] #will take the games and just store header later
 
     if pgnfile is not None:
         #game = chess.pgn.read_game(pgnfile)
@@ -34,9 +40,6 @@ def main():
                 break
             games.append(game) #Games are added to the game list and the headers will be stored in dictionaries
 
-
-        game_info = []
-
         for game in games: #For all games in a single pgn file...
             headers = game.headers
             game_info.append({
@@ -46,12 +49,16 @@ def main():
                 "Opening": headers.get("Opening", "Unknown"),
             }) #The headers are extracted and set equivalent to whatever they are in the game...
 
-        df = pd.DataFrame(game_info) #the datafram is created and stored under df
-        st.dataframe(df) # if you're in Streamlit
+    if not game_info:
+        st.warning("Please upload a PGN file first!")
+        st.stop()
+
+    df = pd.DataFrame(game_info) #the datafram is created and stored under df
+    st.dataframe(df) # if you're in Streamlit
+    username = st.text_input("Enter your Lichess username:")
 
     white_games = []
     black_games = []
-    username = st.text_input("Enter your Lichess username:")
     # Assume username is already collected via Streamlit
     # username = st.text_input("Enter your Lichess username:")
 
