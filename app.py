@@ -7,11 +7,7 @@
     #st.title("Chess Opening Explorer Test")
 
 def main():
-    import streamlit as st
-    import chess.pgn
-    import chess
-    import pandas as pd
-    import matplotlib
+    iw
 
     st.title("Chess Opening Explorer Test")
 
